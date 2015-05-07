@@ -151,3 +151,4 @@
  )
 
 (textmate-mode)
+(setq projectile-completion-system 'grizzl)
