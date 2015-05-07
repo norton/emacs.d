@@ -152,3 +152,6 @@
 
 (textmate-mode)
 (setq projectile-completion-system 'grizzl)
+
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
