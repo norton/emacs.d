@@ -151,6 +151,10 @@
  )
 
 (textmate-mode)
+
+(require 'auto-complete-config)
+(ac-config-default)
+
 (setq projectile-completion-system 'grizzl)
 
 (setq split-height-threshold nil)
