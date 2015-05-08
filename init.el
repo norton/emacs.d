@@ -155,3 +155,5 @@
 
 (setq split-height-threshold nil)
 (setq split-width-threshold 0)
+
+(toggle-frame-fullscreen)
