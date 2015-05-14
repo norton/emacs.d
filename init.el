@@ -158,3 +158,6 @@
 (setq projectile-completion-system 'grizzl)
 
 (toggle-frame-fullscreen)
+
+(global-set-key (kbd "M-p") 'ace-window)
+(setq aw-dispatch-always 't)
