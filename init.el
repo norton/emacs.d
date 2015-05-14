@@ -157,7 +157,9 @@
 
 (setq projectile-completion-system 'grizzl)
 
+(global-set-key (kbd "C-x g") 'magit-status)
+
 (toggle-frame-fullscreen)
 
-(global-set-key (kbd "M-p") 'ace-window)
+(global-set-key (kbd "s-r") 'ace-window)
 (setq aw-dispatch-always 't)
