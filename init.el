@@ -151,6 +151,8 @@
  ;; If there is more than one, they won't work right.
  )
 
+(electric-indent-mode +1)
+
 (textmate-mode)
 
 (require 'auto-complete-config)
