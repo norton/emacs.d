@@ -174,3 +174,6 @@
 
 (global-set-key (kbd "<s-return>") (kbd "C-e C-m"))
 (global-set-key (kbd "<S-s-return>") (kbd "C-p C-e C-m"))
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
