@@ -158,8 +158,6 @@
 (require 'auto-complete-config)
 (ac-config-default)
 
-(setq projectile-completion-system 'grizzl)
-
 (global-set-key (kbd "C-x g") 'magit-status)
 
 (toggle-frame-fullscreen)
@@ -177,3 +175,9 @@
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
+
+(require 'helm-config)
+(global-set-key (kbd "M-x") 'helm-M-x)
+
+(require 'helm-projectile)
+(helm-projectile-on)
