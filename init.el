@@ -165,6 +165,16 @@
 (global-set-key (kbd "s-r") 'ace-window)
 (setq aw-dispatch-always 't)
 
+(global-set-key (kbd "s-1") (kbd "s-r 1"))
+(global-set-key (kbd "s-2") (kbd "s-r 2"))
+(global-set-key (kbd "s-3") (kbd "s-r 3"))
+(global-set-key (kbd "s-4") (kbd "s-r 4"))
+(global-set-key (kbd "s-5") (kbd "s-r 5"))
+(global-set-key (kbd "s-6") (kbd "s-r 6"))
+(global-set-key (kbd "s-7") (kbd "s-r 7"))
+(global-set-key (kbd "s-8") (kbd "s-r 8"))
+(global-set-key (kbd "s-9") (kbd "s-r 9"))
+
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)

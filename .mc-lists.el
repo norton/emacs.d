@@ -8,10 +8,13 @@
         paredit-backward-down
         paredit-backward-up
         paredit-forward
+        paredit-forward-delete
         paredit-forward-down
         paredit-forward-up
         ))
 
 (setq mc/cmds-to-run-once
       '(
+        ace-window
+        beginning-of-buffer
         ))
