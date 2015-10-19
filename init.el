@@ -152,6 +152,14 @@
  ;; If there is more than one, they won't work right.
  )
 
+(defun switch-to-previous-buffer ()
+  "Switch to most recent buffer. Repeated calls toggle back and forth between the most recent two buffers."
+  (interactive)
+  (switch-to-buffer (other-buffer (current-buffer) 1)))
+
+;; set key binding
+(global-set-key (kbd "C-`") 'switch-to-previous-buffer)
+
 (electric-indent-mode +1)
 
 (textmate-mode)
