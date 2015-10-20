@@ -24,4 +24,5 @@
       '(
         ace-window
         beginning-of-buffer
+        end-of-buffer
         ))
