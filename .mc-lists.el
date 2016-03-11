@@ -7,6 +7,7 @@
         forward-sexp
         indent-for-tab-command
         indent-new-comment-line
+        kill-region
         paredit-backward
         paredit-backward-down
         paredit-backward-kill-word
