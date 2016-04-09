@@ -215,3 +215,9 @@
 
 (avy-setup-default)
 (global-set-key (kbd "s-d") 'avy-goto-word-1)
+
+;; set maximum indentation for description lists
+(setq org-list-description-max-indent 5)
+
+;; prevent demoting heading also shifting text inside sections
+(setq org-adapt-indentation nil)
