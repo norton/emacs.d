@@ -212,3 +212,6 @@
 (global-set-key (kbd "M-p") (kbd "C-u 1 M-v"))
 
 (global-set-key (kbd "M-\\") 'shrink-whitespace)
+
+(avy-setup-default)
+(global-set-key (kbd "s-d") 'avy-goto-word-1)
