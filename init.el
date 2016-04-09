@@ -164,7 +164,7 @@
 
 (electric-indent-mode +1)
 
-(textmate-mode)
+;; (textmate-mode)
 
 (require 'auto-complete-config)
 (ac-config-default)
