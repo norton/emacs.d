@@ -221,3 +221,6 @@
 
 ;; prevent demoting heading also shifting text inside sections
 (setq org-adapt-indentation nil)
+
+(require 'powerline)
+(powerline-center-theme)
