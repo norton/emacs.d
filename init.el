@@ -224,3 +224,5 @@
 
 (require 'powerline)
 (powerline-center-theme)
+
+(delete-selection-mode t)
