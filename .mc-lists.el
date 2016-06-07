@@ -12,6 +12,7 @@
         paredit-backward-down
         paredit-backward-kill-word
         paredit-backward-up
+        paredit-doublequote
         paredit-forward
         paredit-forward-delete
         paredit-forward-down
