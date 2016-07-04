@@ -12,7 +12,7 @@
 ;; A little more syntax highlighting
 (require 'clojure-mode-extra-font-locking)
 
-;; syntax hilighting for midje
+;; syntax highlighting for midje
 (add-hook 'clojure-mode-hook
           (lambda ()
             (setq inferior-lisp-program "lein repl")
@@ -24,6 +24,16 @@
                 (1 font-lock-keyword-face))))
             (define-clojure-indent (fact 1))
             (define-clojure-indent (facts 1))))
+
+(require 'clj-refactor)
+
+(defun my-clojure-mode-hook ()
+  (clj-refactor-mode 1)
+  ;; (yas-minor-mode 1) ; for adding require/use/import statements
+  ;; This choice of keybinding leaves cider-macroexpand-1 unbound
+  (cljr-add-keybindings-with-prefix "C-c C-m"))
+
+(add-hook 'clojure-mode-hook #'my-clojure-mode-hook)
 
 ;;;;
 ;; Cider
