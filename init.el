@@ -168,8 +168,7 @@
 
 ;; (textmate-mode)
 
-(require 'auto-complete-config)
-(ac-config-default)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
