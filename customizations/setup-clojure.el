@@ -41,7 +41,7 @@
 ;; Cider
 ;;;;
 
-;; provides minibuffer documentation for the code you're typing into the repl
+;; provides minibuffer documentation for the code you're typing
 (add-hook 'cider-mode-hook #'eldoc-mode)
 
 ;; go right to the REPL buffer when it's finished connecting
@@ -59,6 +59,9 @@
 
 ;; enable paredit in your REPL
 (add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+;; enable eldoc in cider REPL
+(add-hook 'cider-repl-mode-hook #'eldoc-mode)
 
 ;; Pretty-print all output in the REPL.
 (setq cider-repl-use-pretty-printing t)
