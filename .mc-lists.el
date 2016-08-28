@@ -17,7 +17,9 @@
         paredit-forward-delete
         paredit-forward-down
         paredit-forward-kill-word
+        paredit-forward-slurp-sexp
         paredit-forward-up
+        paredit-open-square
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         ))
@@ -27,4 +29,6 @@
         ace-window
         beginning-of-buffer
         end-of-buffer
+        paredit-close-round
+        paredit-open-round
         ))
