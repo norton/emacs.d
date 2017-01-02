@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         backward-sexp
+        c-electric-delete-forward
         forward-sexp
         indent-for-tab-command
         indent-new-comment-line
