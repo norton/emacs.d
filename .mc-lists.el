@@ -5,6 +5,8 @@
       '(
         backward-sexp
         c-electric-delete-forward
+        c-electric-paren
+        c-electric-semi&comma
         forward-sexp
         indent-for-tab-command
         indent-new-comment-line
