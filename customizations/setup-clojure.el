@@ -69,6 +69,9 @@
 ;; Automatically run tests after loading a file into the REPL.
 (cider-auto-test-mode 1)
 
+;; Don't prompt for symbol after C-c C-d d
+(setq cider-prompt-for-symbol nil)
+
 ;; Use clojure mode for other extensions
 (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
 (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
