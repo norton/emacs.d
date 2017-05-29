@@ -156,7 +156,8 @@
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-push-always-verify nil)
  '(ruby-align-to-stmt-keywords (quote (def if case)))
- '(ruby-insert-encoding-magic-comment nil))
+ '(ruby-insert-encoding-magic-comment nil)
+ '(split-height-threshold 200))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
