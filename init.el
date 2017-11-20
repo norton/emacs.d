@@ -181,6 +181,12 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(with-eval-after-load 'magit
+  (magit-change-popup-key 'magit-fetch-popup  :action ?u ?f)
+  (magit-change-popup-key 'magit-pull-popup   :action ?u ?F)
+  (magit-change-popup-key 'magit-rebase-popup :action ?e ?r)
+  (magit-change-popup-key 'magit-push-popup   :action ?p ?P))
+
 (toggle-frame-fullscreen)
 
 (global-set-key (kbd "s-r") 'ace-window)
