@@ -155,6 +155,9 @@
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
  '(magit-fetch-arguments (quote ("--prune")))
  '(magit-push-always-verify nil)
+ '(package-selected-packages
+   (quote
+    (yaml-mode textmate terraform-mode tagedit solarized-theme smex slim-mode shrink-whitespace rainbow-delimiters powerline org magit ido-ubiquitous helm-projectile grizzl expand-region exec-path-from-shell dockerfile-mode company clojure-mode-extra-font-locking clj-refactor ace-window)))
  '(ruby-align-to-stmt-keywords (quote (def if case)))
  '(ruby-insert-encoding-magic-comment nil)
  '(split-height-threshold 200))
