@@ -192,6 +192,8 @@
 
 (require 'git-gutter-fringe)
 (global-git-gutter-mode t)
+(add-hook 'magit-post-refresh-hook
+          #'git-gutter:update-all-windows)
 
 (toggle-frame-fullscreen)
 
