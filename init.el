@@ -148,6 +148,7 @@
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
  '(coffee-tab-width 2)
+ '(column-number-mode t)
  '(cursor-type (quote bar))
  '(custom-enabled-themes (quote (solarized-light)))
  '(custom-safe-themes
