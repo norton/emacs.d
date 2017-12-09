@@ -147,6 +147,8 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default bold shadow italic underline bold bold-italic bold])
+ '(blink-cursor-blinks 0)
+ '(blink-cursor-delay 0.2)
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(cursor-type (quote bar))
