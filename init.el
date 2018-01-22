@@ -160,7 +160,7 @@
  '(magit-push-always-verify nil)
  '(package-selected-packages
    (quote
-    (rjsx-mode kubernetes git-gutter-fringe yaml-mode textmate terraform-mode tagedit solarized-theme smex slim-mode shrink-whitespace rainbow-delimiters powerline org magit ido-ubiquitous helm-projectile grizzl expand-region exec-path-from-shell dockerfile-mode company clojure-mode-extra-font-locking clj-refactor ace-window)))
+    (rjsx-mode kubernetes yaml-mode textmate terraform-mode tagedit solarized-theme smex slim-mode shrink-whitespace rainbow-delimiters powerline org magit ido-ubiquitous helm-projectile grizzl expand-region exec-path-from-shell dockerfile-mode company clojure-mode-extra-font-locking clj-refactor ace-window)))
  '(ruby-align-to-stmt-keywords (quote (def if case)))
  '(ruby-insert-encoding-magic-comment nil)
  '(split-height-threshold 200))
@@ -192,11 +192,6 @@
   (magit-change-popup-key 'magit-pull-popup   :action ?u ?F)
   (magit-change-popup-key 'magit-rebase-popup :action ?e ?r)
   (magit-change-popup-key 'magit-push-popup   :action ?p ?P))
-
-(require 'git-gutter-fringe)
-(global-git-gutter-mode t)
-(add-hook 'magit-post-refresh-hook
-          #'git-gutter:update-all-windows)
 
 (toggle-frame-fullscreen)
 
