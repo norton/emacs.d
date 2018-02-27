@@ -7,6 +7,7 @@
         c-electric-delete-forward
         c-electric-paren
         c-electric-semi&comma
+        cljr-splice-sexp-killing-backward
         forward-sexp
         indent-for-tab-command
         indent-new-comment-line
