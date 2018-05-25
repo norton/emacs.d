@@ -238,11 +238,17 @@
 (avy-setup-default)
 (global-set-key (kbd "s-d") 'avy-goto-word-1)
 
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+
 ;; set maximum indentation for description lists
 (setq org-list-description-max-indent 5)
 
 ;; prevent demoting heading also shifting text inside sections
 (setq org-adapt-indentation nil)
+
+(setq org-agenda-files (list "~/org/work.org"))
 
 (delete-selection-mode t)
 
