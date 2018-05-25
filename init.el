@@ -253,7 +253,7 @@
 (delete-selection-mode t)
 
 (global-emojify-mode)
-(setq emojify-inhibit-major-modes (list 'ruby-mode))
+(setq emojify-inhibit-major-modes (list 'ruby-mode 'magit-mode))
 
 ;; fine-tune Fira Code so it does not break Helm
 (when (window-system)
