@@ -32,6 +32,7 @@
       '(
         ace-window
         beginning-of-buffer
+        cljr-slash
         cljr-thread
         end-of-buffer
         paredit-close-round
