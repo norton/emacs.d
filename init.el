@@ -250,6 +250,9 @@
 
 (setq org-agenda-files (list "~/org/work.org"))
 
+(setq org-default-notes-file (concat org-directory "/work.org"))
+(define-key global-map "\C-cc" 'org-capture)
+
 (delete-selection-mode t)
 
 (global-emojify-mode)
