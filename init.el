@@ -149,6 +149,7 @@
    [default bold shadow italic underline bold bold-italic bold])
  '(blink-cursor-blinks 0)
  '(blink-cursor-delay 0.2)
+ '(cider-repl-display-help-banner nil)
  '(coffee-tab-width 2)
  '(column-number-mode t)
  '(cursor-type (quote bar))
