@@ -59,7 +59,7 @@
     ;; allow ido usage in as many contexts as possible. see
     ;; customizations/navigation.el line 23 for a description
     ;; of ido
-    ido-ubiquitous
+    ido-completing-read+
 
     ;; Enhances M-x to allow easier execution of commands. Provides
     ;; a filterable list of possible commands in the minibuffer
@@ -76,7 +76,16 @@
     tagedit
 
     ;; git integration
-    magit))
+    magit
+
+    clj-refactor
+    expand-region
+    helm
+    helm-projectile
+    avy
+    emojify
+    company
+    solarized-theme))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a
@@ -140,37 +149,6 @@
 ;; Langauage-specific
 (load "setup-clojure.el")
 (load "setup-js.el")
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default bold shadow italic underline bold bold-italic bold])
- '(blink-cursor-blinks 0)
- '(blink-cursor-delay 0.2)
- '(cider-repl-display-help-banner nil)
- '(coffee-tab-width 2)
- '(column-number-mode t)
- '(cursor-type (quote bar))
- '(custom-enabled-themes (quote (solarized-light)))
- '(custom-safe-themes
-   (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" default)))
- '(magit-fetch-arguments (quote ("--prune")))
- '(magit-push-always-verify nil)
- '(package-selected-packages
-   (quote
-    (clojure-mode emojify cider rjsx-mode kubernetes yaml-mode textmate terraform-mode tagedit solarized-theme smex slim-mode shrink-whitespace rainbow-delimiters powerline org magit ido-ubiquitous helm-projectile grizzl expand-region exec-path-from-shell dockerfile-mode company clojure-mode-extra-font-locking clj-refactor ace-window)))
- '(ruby-align-to-stmt-keywords (quote (def if case)))
- '(ruby-insert-encoding-magic-comment nil)
- '(split-height-threshold 200))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
 
 (defun switch-to-previous-buffer ()
   "Switch to most recent buffer. Repeated calls toggle back and forth between the most recent two buffers."
@@ -291,3 +269,22 @@
   (dolist (char-regexp alist)
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(coffee-tab-width 2)
+ '(custom-enabled-themes (quote (solarized-dark)))
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(package-selected-packages
+   (quote
+    (solarized-theme company emojify avy helm-projectile helm expand-region clj-refactor magit tagedit rainbow-delimiters projectile smex ido-completing-read+ cider clojure-mode-extra-font-locking clojure-mode paredit exec-path-from-shell))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
