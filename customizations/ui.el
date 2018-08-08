@@ -5,15 +5,18 @@
 ;; preferences
 
 ;; Turn off the menu bar at the top of each frame because it's distracting
-(menu-bar-mode -1)
+;; (menu-bar-mode -1)
 
 ;; Show line numbers
+(line-number-mode t)
+(column-number-mode t)
+(size-indication-mode t)
 (global-linum-mode)
 
 ;; You can uncomment this to remove the graphical toolbar at the top. After
 ;; awhile, you won't need the toolbar.
-;; (when (fboundp 'tool-bar-mode)
-;;   (tool-bar-mode -1))
+(when (fboundp 'tool-bar-mode)
+  (tool-bar-mode -1))
 
 ;; Don't show native OS scroll bars for buffers because they're redundant
 (when (fboundp 'scroll-bar-mode)
