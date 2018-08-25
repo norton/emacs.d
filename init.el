@@ -91,7 +91,8 @@
     avy
     emojify
     company
-    solarized-theme))
+    solarized-theme
+    markdown-mode))
 
 ;; On OS X, an Emacs instance started from the graphical user
 ;; interface will have a different environment than a shell in a

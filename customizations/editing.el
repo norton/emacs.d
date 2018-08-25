@@ -189,9 +189,17 @@
 
 (use-package whitespace
   :init
+  (defvar whitespace-cleanup-before-save t)
+  (defun my-whitespace-cleanup-before-save ()
+    (if whitespace-cleanup-before-save
+      (whitespace-cleanup)))
   (dolist (hook '(prog-mode-hook text-mode-hook))
     (add-hook hook #'whitespace-mode))
-  (add-hook 'before-save-hook #'whitespace-cleanup)
+  (add-hook 'before-save-hook 'my-whitespace-cleanup-before-save)
+  ;; Except Markdown
+  (add-hook 'markdown-mode-hook
+    '(lambda ()
+       (set (make-local-variable 'whitespace-cleanup-before-save) nil)))
   :config
   (setq whitespace-line-column 80) ;; limit line length
   (setq whitespace-style '(face tabs empty trailing lines-tail)))
