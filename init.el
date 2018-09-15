@@ -35,6 +35,12 @@
 (require 'use-package)
 (setq use-package-verbose t)
 
+(unless (package-installed-p 'auto-package-update)
+  (package-install 'auto-package-update))
+
+(require 'auto-package-update)
+(auto-package-update-maybe)
+
 ;; Define he following variables to remove the compile-log warnings
 ;; when defining ido-ubiquitous
 (defvar ido-cur-item nil)
