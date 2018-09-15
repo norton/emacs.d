@@ -185,8 +185,6 @@
   (magit-change-popup-key 'magit-rebase-popup :action ?e ?r)
   (magit-change-popup-key 'magit-push-popup   :action ?p ?P))
 
-(toggle-frame-fullscreen)
-
 (global-set-key (kbd "s-r") 'ace-window)
 (setq aw-dispatch-always 't)
 
