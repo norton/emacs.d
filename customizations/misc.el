@@ -16,3 +16,6 @@
   ;;(setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'meta)
   (global-set-key [kp-delete] 'delete-char)) ;; sets fn-delete to be right-delete
+
+;; fix LANG
+(setenv "LANG" "en_US.UTF-8")

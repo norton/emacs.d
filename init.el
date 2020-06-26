@@ -1,9 +1,12 @@
-;;;;
-;; Packages
-;;;;
+;;; package -- Summary:
+
+;;; Commentary:
+
+;;; Code:
 
 (require 'gnutls)
 (add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem")
+(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
 
 ;; Define package repositories
 (require 'package)
@@ -38,11 +41,6 @@
 
 ;; Define he following variables to remove the compile-log warnings
 ;; when defining ido-ubiquitous
-(defvar ido-cur-item nil)
-(defvar ido-default-item nil)
-(defvar ido-cur-list nil)
-(defvar predicate nil)
-(defvar inherit-input-method nil)
 
 ;; The packages you want installed. You can also install these
 ;; manually with M-x package-install
@@ -85,6 +83,11 @@
     ;; git integration
     magit
 
+    ;; flycheck
+    flycheck
+    flycheck-clj-kondo
+
+    graphviz-dot-mode
     clj-refactor
     expand-region
     helm
@@ -222,21 +225,6 @@
 
 (avy-setup-default)
 (global-set-key (kbd "s-d") 'avy-goto-word-1)
-
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-
-;; set maximum indentation for description lists
-(setq org-list-description-max-indent 5)
-
-;; prevent demoting heading also shifting text inside sections
-(setq org-adapt-indentation nil)
-
-(setq org-agenda-files (list "~/org/work.org"))
-
-(setq org-default-notes-file (concat org-directory "/work.org"))
-(define-key global-map "\C-cc" 'org-capture)
 
 (delete-selection-mode t)
 

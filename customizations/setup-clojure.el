@@ -2,9 +2,13 @@
 ;; Clojure
 ;;;;
 
+(use-package flycheck-clj-kondo
+  :ensure t)
+
 (use-package clojure-mode
   :ensure t
   :config
+  (require 'flycheck-clj-kondo)
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'clojure-mode-hook #'subword-mode)
   (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode))

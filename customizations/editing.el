@@ -27,6 +27,7 @@
 
 ;; Don't use hard tabs
 (setq-default indent-tabs-mode nil)
+(setq default-tab-width 2)
 
 ;; When you visit a file, point goes to the last place where it
 ;; was when you previously visited the same file.
@@ -224,6 +225,15 @@
     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
     (add-hook 'scheme-mode-hook #'parinfer-mode)
     (add-hook 'lisp-mode-hook #'parinfer-mode)))
+
+;; https://www.flycheck.org/en/latest/
+(use-package flycheck
+  :ensure t
+  :config
+  (global-flycheck-mode))
+(use-package flycheck-pos-tip
+  :ensure t
+  :after flycheck)
 
 ;; temporarily highlight changes from yanking, etc
 (use-package volatile-highlights
