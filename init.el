@@ -1,46 +1,125 @@
-;;; package -- Summary:
+;;; init.el --- Where all the magic begins
 
 ;;; Commentary:
+;; https://github.com/Bassmann/emacs-config
 
 ;;; Code:
+;;
+;; This file loads Org-mode and then loads the rest of our Emacs
+;; initialization from Emacs lisp embedded in literate Org-mode files.
 
-(require 'gnutls)
-(add-to-list 'gnutls-trustfiles "/usr/local/etc/openssl/cert.pem")
-(setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+;; Avoid garbage collection during startup. The GC eats up quite a bit
+;; of time, easily doubling the startup time. The trick is to turn up
+;; the memory threshold in order to prevent it from running during
+;; startup.
+(setq gc-cons-threshold most-positive-fixnum ; 2^61 bytes
+      gc-cons-percentage 0.6)
 
-;; Define package repositories
+;; Every file opened and loaded by Emacs will run through this list to
+;; check for a proper handler for the file, but during startup, it
+;; won’t need any of them.
+(defvar file-name-handler-alist-original file-name-handler-alist)
+(setq file-name-handler-alist nil)
+
+;; After Emacs startup has been completed, set `gc-cons-threshold' to
+;; 16 MB and reset `gc-cons-percentage' to its original value.  Also
+;; reset `file-name-handler-alist'
+(add-hook 'emacs-startup-hook
+          '(lambda ()
+             (setq gc-cons-threshold (* 16 1024 1024)
+                   gc-cons-percentage 0.1
+                   file-name-handler-alist file-name-handler-alist-original)
+             (makunbound 'file-name-handler-alist-original)))
+
+;; It may also be wise to raise gc-cons-threshold while the minibuffer
+;; is active, so the GC doesn’t slow down expensive commands (or
+;; completion frameworks, like helm and ivy).
+(defun doom-defer-garbage-collection-h ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun doom-restore-garbage-collection-h ()
+  ;; Defer it so that commands launched immediately after will enjoy
+  ;; the benefits.
+  (run-at-time
+   1 nil (lambda () (setq gc-cons-threshold (* 16 1024 1024)))))
+
+(add-hook 'minibuffer-setup-hook #'doom-defer-garbage-collection-h)
+(add-hook 'minibuffer-exit-hook #'doom-restore-garbage-collection-h)
+
+;; I don't need the big icons and prefer more screen real estate. See
+;; also https://sites.google.com/site/steveyegge2/effective-emacs
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+;;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+
+;; Set repositories
 (require 'package)
+(setq-default load-prefer-newer t)
+;; I want orgmode before melpa or gnu
+(setq package-archives
+      '(("ORG" . "https://orgmode.org/elpa/")
+        ("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+        ("MELPA"        . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("ORG" . 10)
+        ("GNU ELPA"     . 5)
+        ("MELPA"        . 0)))
 
-(add-to-list 'package-archives
-             '("MELPA Stable" . "https://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("GNU ELPA" . "https://elpa.gnu.org/packages/") t)
+(when (version< emacs-version "27.0") (package-initialize))
+;; Install dependencies
+(unless (and (package-installed-p 'delight)
+             (package-installed-p 'bind-key)
+             (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'delight t)
+  (package-install 'bind-key t)
+  (package-install 'use-package t))
 
-;; Load and activate emacs packages. Do this first so that the
-;; packages are loaded before you start trying to modify them.
-;; This also sets the load path.
-(package-initialize)
+(setq-default
+ use-package-always-defer t
+ use-package-always-ensure t
+ use-package-compute-statistics t
+ use-package-verbose t)
 
-;; Download the ELPA archive description if needed.
-;; This informs Emacs about the latest versions of all packages, and
-;; makes them available for download.
-(when (not package-archive-contents)
-  (package-refresh-contents))
+;; https://www.emacswiki.org/emacs/GnuPG#toc2
+;; (setq package-check-signature nil)
+(let ((my/old package-check-signature))
+  (use-package gnu-elpa-keyring-update
+    :ensure t
+    :init   (setq package-check-signature nil)
+    :config (setq package-check-signature my/old)))
 
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package))
+;; Use latest Org and pin
+(use-package org
+  :ensure org-plus-contrib
+  :custom
+  (org-export-backends '(ascii html md))
+  :pin ORG)
 
-(require 'use-package)
-(setq use-package-verbose t)
+(use-package auto-package-update
+  :ensure t
+  :init (auto-package-update-maybe))
 
-(unless (package-installed-p 'auto-package-update)
-  (package-install 'auto-package-update))
+;; no-littering is useful to de-clutter my /.emacs.d directory
+(setq no-littering-etc-directory
+      (expand-file-name "config/" user-emacs-directory))
+(setq no-littering-var-directory
+      (expand-file-name "data/" user-emacs-directory))
 
-(require 'auto-package-update)
-(auto-package-update-maybe)
+(use-package no-littering)
+(require 'no-littering)
 
-;; Define he following variables to remove the compile-log warnings
-;; when defining ido-ubiquitous
+;; load up all literate org-mode files in user-emacs-directory
+(mapc #'org-babel-load-file (directory-files user-emacs-directory t "\\.org$"))
+
+;; Use a hook so the message doesn't get clobbered by other messages.
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (message "Emacs ready in %s with %d garbage collections."
+                     (format "%.2f seconds"
+                             (float-time
+                              (time-subtract after-init-time before-init-time)))
+                     gcs-done)))
 
 ;; The packages you want installed. You can also install these
 ;; manually with M-x package-install
@@ -233,7 +312,7 @@
 
 ;; fine-tune Fira Code so it does not break Helm
 (when (window-system)
-  (set-default-font "Fira Code"))
+  (set-frame-font "Fira Code"))
 (let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
                (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
                (36 . ".\\(?:>\\)")
@@ -257,28 +336,11 @@
                (119 . ".\\(?:ww\\)")
                (123 . ".\\(?:-\\)")
                (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
-               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
-               )
-             ))
+               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)"))))
+
+
   (dolist (char-regexp alist)
     (set-char-table-range composition-function-table (car char-regexp)
                           `([,(cdr char-regexp) 0 font-shape-gstring]))))
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(coffee-tab-width 2)
- '(custom-enabled-themes (quote (solarized-dark)))
- '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(package-selected-packages
-   (quote
-    (solarized-theme company emojify avy helm-projectile helm expand-region clj-refactor magit tagedit rainbow-delimiters projectile smex ido-completing-read+ cider clojure-mode-extra-font-locking clojure-mode paredit exec-path-from-shell))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+
+;;; init.el ends here

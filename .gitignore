@@ -8,6 +8,7 @@ auto-save-list/
 backups
 bookmarks
 cider-history
+data/
 elpa/
 emojis/
 games/
