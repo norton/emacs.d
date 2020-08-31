@@ -73,106 +73,42 @@
 (setq electric-indent-mode nil)
 
 (use-package evil
-  :ensure t
+  :init
+  (setq evil-want-integration t) ; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
   :config
+  ;; add some emacs-like insert mode binds, for maximum confusion and heresy
+  (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
+  (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
+  (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
+  (define-key evil-insert-state-map (kbd "C-n") 'next-line)
+  (define-key evil-insert-state-map (kbd "C-k") 'kill-line)
+  ;; scroll with C-u and bind the universal argument to M-u
+  (define-key evil-normal-state-map (kbd "M-u") 'universal-argument)
+  (define-key evil-normal-state-map (kbd "C-u") 'evil-scroll-up)
+  (define-key evil-visual-state-map (kbd "C-u") 'evil-scroll-up)
+  (define-key evil-insert-state-map (kbd "C-u")
+    (lambda ()
+      (interactive)
+      (evil-delete (point-at-bol) (point))))
+
+  :config
+  (use-package evil-commentary
+    :config (evil-commentary-mode))
   (evil-mode 1)
+  :config  ;; This makes evil work betther with visual-line-mode
+  (define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+  (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+  (setq-default evil-cross-lines t)
 
-  (setq-default evil-auto-indent t
-                evil-cross-lines t
-                evil-default-cursor t
-                evil-default-state 'normal
-                evil-echo-state nil
-                evil-ex-search-case 'smart
-                evil-ex-search-vim-style-regexp t
-                evil-magic 'very-magic
-                evil-search-module 'evil-search
-                evil-shift-width 2)
+  (add-to-list 'evil-emacs-state-modes 'dired-mode)) ;; Disable evil in dired
 
-  ;; Avoid dropping into insert mode in compilation windows
-  (add-hook 'compilation-start-hook 'evil-normal-state)
-
-  (defun ef-kill-other-buffers ()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
-
-  (define-key evil-normal-state-map ",kob" 'ef-kill-other-buffers)
-  (define-key evil-normal-state-map ",kb" 'kill-this-buffer)
-
-  (defun ef-kill-buffer-or-delete-window ()
-    "If more than one window is open, delete the current window, otherwise kill current buffer"
-    (interactive)
-    (if (> (length (window-list)) 1)
-        (delete-window)
-      (kill-buffer)))
-
-  (evil-ex-define-cmd "q" 'ef-kill-buffer-or-delete-window)
-
-  (defun ef-indent-buffer ()
-    "Indent the currently visited buffer."
-    (interactive)
-    (indent-region (point-min) (point-max)))
-
-  (define-key evil-normal-state-map (kbd ", TAB") 'ef-indent-buffer)
-
-  (define-key evil-visual-state-map (kbd "TAB") 'indent-region)
-  (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
-
-  (define-key evil-normal-state-map ",i" 'imenu)
-  (define-key evil-normal-state-map ",ws" 'delete-trailing-whitespace)
-
-  ;; Alignment
-  (defun ef-align-to-= (begin end)
-    "Align region to = signs"
-    (interactive "r")
-    (align-regexp begin end "\\(\\s-*\\)=" 1 1))
-
-  (evil-define-key 'visual prog-mode-map ",=" 'ef-align-to-=)
-
-  ;; Easier window navigation
-  (define-key evil-normal-state-map (kbd "s-h") 'evil-window-left)
-  (define-key evil-normal-state-map (kbd "s-j") 'evil-window-down)
-  (define-key evil-normal-state-map (kbd "s-k") 'evil-window-up)
-  (define-key evil-normal-state-map (kbd "s-l") 'evil-window-right)
-
-  ;; Text-scaling
-  (define-key evil-normal-state-map ",-" 'text-scale-adjust)
-  (define-key evil-normal-state-map ",+" 'text-scale-adjust)
-  (define-key evil-normal-state-map ",=" 'text-scale-adjust)
-
-  ;; Comint history
-  (evil-define-key 'insert comint-mode-map (kbd "<up>") 'comint-previous-input)
-  (evil-define-key 'insert comint-mode-map (kbd "<down>") 'comint-next-input)
-
-  ;; Unset some annoying keys
-  (define-key evil-motion-state-map "K" nil)
-  (define-key evil-normal-state-map "K" nil)
-
-  (defvar ef-toggle-scratch--prev-buffer nil)
-
-  (defun ef-toggle-scratch--goto-scratch ()
-    (if-let* ((scratch-buffer (get-buffer "*scratch*")))
-        (progn
-          (setq ef-toggle-scratch--prev-buffer (current-buffer))
-          (switch-to-buffer scratch-buffer))
-      (message "No *scratch* buffer found.")))
-
-  (defun ef-toggle-scratch--goto-prev-buffer ()
-    (if (buffer-live-p ef-toggle-scratch--prev-buffer)
-        (switch-to-buffer ef-toggle-scratch--prev-buffer)
-      (message "No buffer to switch back to.")))
-
-  (defun ef-toggle-scratch ()
-    "Toggle between *scratch* buffer and the current buffer."
-    (interactive)
-    (if (equal (buffer-name) "*scratch*")
-        (ef-toggle-scratch--goto-prev-buffer)
-      (ef-toggle-scratch--goto-scratch)))
-
-  (define-key evil-normal-state-map ",S" 'ef-toggle-scratch)
-
-  (evil-add-hjkl-bindings package-menu-mode-map 'emacs
-                          "H" 'package-menu-quick-help))
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 (use-package undo-tree
   :after evil
